@@ -16,7 +16,7 @@ const imagePopup = document.querySelector('.popup_type_image')
 // редактирование профиля
 
 profileEditBtn.addEventListener('click', () => {
-	profilePopup.style.display = 'flex'
+	profilePopup.classList.toggle('popup_is-opened')
 })
 
 profileSubmitBtn.addEventListener('click', event => {
@@ -41,7 +41,7 @@ const editProfile = (name, desc) => {
 // добавление карточек
 
 addCardBtn.addEventListener('click', () => {
-	cardPopup.style.display = 'flex'
+	cardPopup.classList.toggle('popup_is-opened')
 })
 
 cardPopupBtn.addEventListener('click', event => {
@@ -75,7 +75,7 @@ const addCard = (title, link) => {
 			.closest('.card')
 			.querySelector('.card__title').textContent
 
-		imagePopup.style.display = 'flex'
+		imagePopup.classList.toggle('popup_is-opened')
 	})
 }
 
@@ -84,12 +84,10 @@ const addCard = (title, link) => {
 const popupCloseList = document.querySelectorAll('.popup__close')
 popupCloseList.forEach(elem => {
 	elem.addEventListener('click', event => {
-		event.target.closest('.popup').style.display = 'none'
+		event.target.closest('.popup').classList.toggle('popup_is-opened')
 	})
 })
 
 // Загрузка карточек на страницу
 
-initialCards.forEach(elem => {
-	addCard(elem.name, elem.link)
-})
+initialCards.forEach(({ name, link }) => addCard(name, link))
