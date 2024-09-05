@@ -38,11 +38,11 @@ profileSubmitBtn.addEventListener('click', event => {
 	const name = profilePopup.querySelector('.popup__input_type_name')
 	const desc = profilePopup.querySelector('.popup__input_type_description')
 
-	editProfile(name.value, desc.value)
+	editProfile({ name: name.value, desc: desc.value })
 	togglePopup(profilePopup)
 })
 
-const editProfile = (name, desc) => {
+const editProfile = ({ name, desc }) => {
 	const profileTitle = document.querySelector('.profile__title')
 	const profileDesc = document.querySelector('.profile__description')
 
@@ -53,41 +53,46 @@ const editProfile = (name, desc) => {
 // Работа с карточками
 addCardBtn.addEventListener('click', () => togglePopup(cardPopup))
 
+const addCard = cardData => {
+	const card = createCard(cardData)
+	list.prepend(card)
+}
+
 cardPopupBtn.addEventListener('click', event => {
 	event.preventDefault()
 
 	const title = cardPopup.querySelector('.popup__input_type_card-name')
 	const url = cardPopup.querySelector('.popup__input_type_url')
 
-	addCard(title.value, url.value)
+	addCard({ name: title.value, link: url.value })
 	togglePopup(cardPopup)
 })
 
-const addCard = (title, link) => {
+const createCard = ({ name, link }) => {
 	const card = template.querySelector('.card').cloneNode(true)
+	const cardTitle = card.querySelector('.card__title')
 	const cardImage = card.querySelector('.card__image')
 	const cardLikeBtn = card.querySelector('.card__like-button')
 	const cardDelBtn = card.querySelector('.card__delete-button')
 
-	card.querySelector('.card__title').textContent = title
-	card.querySelector('.card__image').src = link
+	cardTitle.textContent = name
+	cardImage.src = link
+	cardImage.alt = name
 
 	cardLikeBtn.addEventListener('click', event =>
 		event.target.classList.toggle('card__like-button_is-active')
 	)
 
-	cardDelBtn.addEventListener('click', event =>
-		cardDel(event.target.closest('.card'))
-	)
+	cardDelBtn.addEventListener('click', () => cardDel(card))
 
 	cardImage.addEventListener('click', () => {
 		imagePopup.querySelector('.popup__image').src = link
-		imagePopup.querySelector('.popup__caption').textContent = title
+		imagePopup.querySelector('.popup__caption').textContent = name
 
 		togglePopup(imagePopup)
 	})
 
-	list.append(card)
+	return card
 }
 
 const cardDel = card => {
@@ -95,4 +100,4 @@ const cardDel = card => {
 }
 
 // Загрузка карточек на страницу
-initialCards.forEach(({ name, link }) => addCard(name, link))
+initialCards.forEach(cardData => addCard(cardData))
