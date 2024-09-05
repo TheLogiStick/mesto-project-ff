@@ -50,7 +50,7 @@ const editProfile = (name, desc) => {
 	profileDesc.textContent = desc
 }
 
-// Добавление карточек
+// Работа с карточками
 addCardBtn.addEventListener('click', () => togglePopup(cardPopup))
 
 cardPopupBtn.addEventListener('click', event => {
@@ -72,13 +72,13 @@ const addCard = (title, link) => {
 	card.querySelector('.card__title').textContent = title
 	card.querySelector('.card__image').src = link
 
-	cardLikeBtn.addEventListener('click', event => {
+	cardLikeBtn.addEventListener('click', event =>
 		event.target.classList.toggle('card__like-button_is-active')
-	})
+	)
 
-	cardDelBtn.addEventListener('click', event => {
-		event.target.closest('.card').remove()
-	})
+	cardDelBtn.addEventListener('click', event =>
+		cardDel(event.target.closest('.card'))
+	)
 
 	cardImage.addEventListener('click', () => {
 		imagePopup.querySelector('.popup__image').src = link
@@ -88,6 +88,10 @@ const addCard = (title, link) => {
 	})
 
 	list.append(card)
+}
+
+const cardDel = card => {
+	card.remove()
 }
 
 // Загрузка карточек на страницу
