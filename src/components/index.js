@@ -1,8 +1,8 @@
 // Импорт стилей
-import './pages/index.css'
+import '.././pages/index.css'
 
 // Импорт карточек
-import { initialCards } from './components/cards.js'
+import { initialCards } from './cards.js'
 
 // Импорт попапов
 const profilePopup = document.querySelector('.popup_type_edit')
@@ -21,9 +21,9 @@ const titleProfile = document.querySelector('.profile__title')
 const descProfile = document.querySelector('.profile__description')
 
 // Импорт функций
-import { addCard } from './components/addCard.js'
-import { editProfile } from './components/profileEdit.js'
-import { togglePopup } from './components/togglePopup.js'
+import { addCard } from './addCard.js'
+import { togglePopup } from './modal.js'
+import { editProfile } from './profileEdit.js'
 
 // Редактирование профиля
 profileEditBtn.addEventListener('click', () => {

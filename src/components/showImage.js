@@ -1,4 +1,4 @@
-import { togglePopup } from './togglePopup'
+import { togglePopup } from './modal'
 
 const imagePopup = document.querySelector('.popup_type_image')
 
