@@ -1,3 +1,7 @@
+import './pages/index.css'
+
+import { initialCards } from './components/cards'
+
 // Импорт списка карточек
 const list = document.querySelector('.places__list')
 
