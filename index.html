@@ -35,11 +35,11 @@
 			<footer class="footer page__section">
 				<p class="footer__copyright">© 2021 Mesto Russia</p>
 			</footer>
-			<div class="popup popup_type_edit">
+			<div class="popup popup_type_edit popup_is-animated">
 				<div class="popup__content">
 					<button type="button" class="popup__close"></button>
 					<h3 class="popup__title">Редактировать профиль</h3>
-					<form class="popup__form" name="edit-profile">
+					<form class="popup__form" name="editProfile">
 						<input
 							type="text"
 							name="name"
@@ -60,14 +60,14 @@
 					</form>
 				</div>
 			</div>
-			<div class="popup popup_type_new-card">
+			<div class="popup popup_type_new-card popup_is-animated">
 				<div class="popup__content">
 					<button type="button" class="popup__close"></button>
 					<h3 class="popup__title">Новое место</h3>
-					<form class="popup__form" name="new-place">
+					<form class="popup__form" name="newPlace">
 						<input
 							type="text"
-							name="place-name"
+							name="placeName"
 							class="popup__input popup__input_type_card-name"
 							placeholder="Название"
 							required
@@ -85,7 +85,7 @@
 					</form>
 				</div>
 			</div>
-			<div class="popup popup_type_image">
+			<div class="popup popup_type_image popup_is-animated">
 				<div class="popup__content popup__content_content_image">
 					<button type="button" class="popup__close"></button>
 					<img src="" alt="" class="popup__image" />
@@ -93,8 +93,6 @@
 				</div>
 			</div>
 		</div>
-		<script type="module" src="./scripts/index.js" defer></script>
-
 		<template id="card-template">
 			<li class="places__item card">
 				<img class="card__image" src="" alt="" />
