@@ -22,8 +22,11 @@ const descProfile = document.querySelector('.profile__description')
 
 // Импорт функций
 import { addCard } from './addCard.js'
-import { togglePopup } from './modal.js'
+import { setPopupListeners, togglePopup } from './modal.js'
 import { editProfile } from './profileEdit.js'
+
+// Установка слушателей на попапы
+setPopupListeners()
 
 // Редактирование профиля
 profileEditBtn.addEventListener('click', () => {
@@ -49,6 +52,7 @@ formCard.addEventListener('submit', event => {
 
 	addCard({ name, link })
 	togglePopup(cardPopup, 'close')
+	formCard.reset()
 })
 
 // Загрузка карточек на страницу

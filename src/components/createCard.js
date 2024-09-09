@@ -1,9 +1,7 @@
-import { showImage } from './showImage'
+// Импорт шаблона для карточек
+const template = document.querySelector('#card-template').content
 
-export const createCard = ({ name, link }) => {
-	// Импорт шаблона для карточек
-	const template = document.querySelector('#card-template').content
-
+export const createCard = ({ name, link }, showImage) => {
 	// Создание новой карточки
 	const card = template.querySelector('.card').cloneNode(true)
 
