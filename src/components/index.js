@@ -1,113 +1,86 @@
 // Импорт стилей
-import '.././pages/index.css'
-
-// Импорт попапов
-const profilePopup = document.querySelector('.popup_type_edit')
-const cardPopup = document.querySelector('.popup_type_new-card')
-const avatarPopup = document.querySelector('.popup_type_avatar')
-
-// Кнопки открытия попапов
-const profileEditBtn = document.querySelector('.profile__edit-button')
-const addCardBtn = document.querySelector('.profile__add-button')
-const avatarBtn = document.querySelector('.profile__image')
-
-// Импорт форм
-const formCard = document.forms.newPlace
-const formProfile = document.forms.editProfile
-const formAvatar = document.forms.newAvatar
-
-// Импорт кнопок форм
-const formProfileBtn = formProfile.querySelector('.popup__button')
-const formAvatarBtn = formAvatar.querySelector('.popup__button')
-const formCardBtn = formCard.querySelector('.popup__button')
-
-// Импорт заголовков профиля
-const titleProfile = document.querySelector('.profile__title')
-const descProfile = document.querySelector('.profile__description')
+import '../pages/index.css'
 
 // Импорт функций
-import { addCard } from './addCard.js'
-import { loadData, updateAvatar, updateProfile, uploadCard } from './api.js'
-import { enableValidation } from './enableValidation.js'
-import { setPopupListeners, togglePopup } from './modal.js'
-import { editProfile } from './profileEdit.js'
+import { initializeData } from './../api/api.js'
+import { addCard } from './cards/addCard.js'
+import { enableValidation } from './formValidation/initFormValidation.js'
+import {
+	closePopup,
+	openPopup,
+	setPopupListeners,
+} from './popup/popupController.js'
+import { setLoadingState } from './popup/setLoadingState.js'
+import { editProfile } from './profile/profileEdit.js'
 
-// Кеш профиля
+// Импорт handlers
+import { handleAvatarChange } from './handlers/avatarFormHandler.js'
+import { handleCardUpload } from './handlers/cardUploadHandler.js'
+import { confirmDeletion } from './handlers/deleteCardHandler.js'
+import { handleProfileEdit } from './handlers/profileFormHandler.js'
+
+// Импорт попапов
+const popups = {
+	profile: document.querySelector('.popup_type_edit'),
+	card: document.querySelector('.popup_type_new-card'),
+	avatar: document.querySelector('.popup_type_avatar'),
+}
+
+// Кнопки открытия попапов
+const buttons = {
+	profileEdit: document.querySelector('.profile__edit-button'),
+	addCard: document.querySelector('.profile__add-button'),
+	avatar: document.querySelector('.profile__image'),
+}
+
+// Формы
+const forms = {
+	card: document.forms.newPlace,
+	profile: document.forms.editProfile,
+	avatar: document.forms.newAvatar,
+	confirmDel: document.forms.deleteCard,
+}
+
+// Заголовки профиля
+const profileTitle = document.querySelector('.profile__title')
+const profileDescription = document.querySelector('.profile__description')
+
+// Установка id профиля текущего пользователя
 let profileId
 
 // Установка слушателей на попапы
 setPopupListeners()
 
-// Изменение текста кнопки во время загрузки
-const setLoadingState = (button, isLoading) => {
-	isLoading
-		? (button.textContent = 'Сохранение...')
-		: (button.textContent = 'Сохранить')
-}
-
-// Редактирование профиля
-profileEditBtn.addEventListener('click', () => {
-	// Заполнение полей формы редактирования профиля
-	formProfile.name.value = titleProfile.textContent
-	formProfile.about.value = descProfile.textContent
-
-	togglePopup(profilePopup, 'open')
+// Установка обработчиков событий для открытия попапов
+buttons.profileEdit.addEventListener('click', () => {
+	forms.profile.name.value = profileTitle.textContent
+	forms.profile.about.value = profileDescription.textContent
+	openPopup(popups.profile)
 })
 
-formProfile.addEventListener('submit', event => {
-	event.preventDefault()
+buttons.avatar.addEventListener('click', () => openPopup(popups.avatar))
+buttons.addCard.addEventListener('click', () => openPopup(popups.card))
 
-	setLoadingState(formProfileBtn, true)
+// Установка обработчиков событий для обработки форм
+forms.profile.addEventListener('submit', event =>
+	handleProfileEdit(event, forms.profile, setLoadingState, closePopup)
+)
 
-	const name = formProfile.name.value
-	const about = formProfile.about.value
+forms.avatar.addEventListener('submit', event =>
+	handleAvatarChange(event, forms.avatar, setLoadingState, closePopup)
+)
 
-	updateProfile(name, about)
-		.then(data => editProfile(data))
-		.finally(() => {
-			setLoadingState(formProfileBtn, false)
-			togglePopup(profilePopup, 'close')
-		})
-})
+forms.card.addEventListener('submit', event =>
+	handleCardUpload(event, forms.card, profileId, setLoadingState, closePopup)
+)
 
-// Изменение аватарки
-avatarBtn.addEventListener('click', () => togglePopup(avatarPopup, 'open'))
-
-formAvatar.addEventListener('submit', event => {
-	event.preventDefault()
-
-	setLoadingState(formAvatarBtn, true)
-
-	const avatarLink = formAvatar.avatarLink.value
-
-	updateAvatar(avatarLink)
-		.then(() => editProfile({ avatar: avatarLink }))
-		.finally(() => setLoadingState(formAvatarBtn, false))
-})
-
-// Работа с карточками
-addCardBtn.addEventListener('click', () => togglePopup(cardPopup, 'open'))
-
-formCard.addEventListener('submit', event => {
-	event.preventDefault()
-
-	setLoadingState(formCardBtn, true)
-
-	const name = formCard.placeName.value
-	const link = formCard.link.value
-
-	uploadCard({ name, link }, profileId, addCard).finally(() => {
-		setLoadingState(formCardBtn, false)
-		togglePopup(cardPopup, 'close')
-		formCard.reset()
-	})
-})
+forms.confirmDel.addEventListener('submit', confirmDeletion)
 
 // Включение валидации
 enableValidation()
 
 // Первоначальная загрузка данных
-loadData(profileData => {
+initializeData(profileData => {
 	profileId = profileData._id
 	editProfile(profileData)
 }, addCard)

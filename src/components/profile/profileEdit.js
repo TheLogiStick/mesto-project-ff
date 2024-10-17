@@ -1,5 +1,3 @@
-const profilePopup = document.querySelector('.popup_type_edit')
-
 const profileTitle = document.querySelector('.profile__title')
 const profileDesc = document.querySelector('.profile__description')
 const profileImage = document.querySelector('.profile__image')

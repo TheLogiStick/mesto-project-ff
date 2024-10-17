@@ -1,4 +1,4 @@
-import { togglePopup } from './modal'
+import { openPopup } from './popupController'
 
 const imagePopup = document.querySelector('.popup_type_image')
 const imagePopupTitle = imagePopup.querySelector('.popup__caption')
@@ -8,5 +8,5 @@ export const showImage = (name, link) => {
 	imagePopupImage.src = link
 	imagePopupImage.alt = name
 	imagePopupTitle.textContent = name
-	togglePopup(imagePopup, 'open')
+	openPopup(imagePopup)
 }

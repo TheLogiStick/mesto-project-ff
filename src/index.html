@@ -30,9 +30,9 @@
 						</div>
 					</div>
 					<div class="profile__info">
-						<h1 class="profile__title">Жак-Ив Кусто</h1>
+						<h1 class="profile__title"></h1>
 						<button class="profile__edit-button" type="button"></button>
-						<p class="profile__description">Исследователь океана</p>
+						<p class="profile__description"></p>
 					</div>
 					<button class="profile__add-button" type="button"></button>
 				</section>
@@ -43,6 +43,19 @@
 			<footer class="footer page__section">
 				<p class="footer__copyright">© 2021 Mesto Russia</p>
 			</footer>
+			<div class="loading">
+				<svg class="spinner" viewBox="25 25 50 50">
+					<circle
+						class="spinner__path"
+						cx="50"
+						cy="50"
+						r="20"
+						fill="none"
+						stroke-width="2"
+						stroke-miterlimit="10"
+					/>
+				</svg>
+			</div>
 			<div class="popup popup_type_edit popup_is-animated">
 				<div class="popup__content">
 					<button type="button" class="popup__close"></button>
@@ -107,7 +120,7 @@
 							required
 						/>
 						<span class="link-input-error input-error"></span>
-						<button type="submit" class="button popup__button">
+						<button type="submit" class="button popup__button" disabled>
 							Сохранить
 						</button>
 					</form>
@@ -134,9 +147,18 @@
 							required
 						/>
 						<span class="avatar-input-error input-error"></span>
-						<button type="submit" class="button popup__button">
+						<button type="submit" class="button popup__button" disabled>
 							Сохранить
 						</button>
+					</form>
+				</div>
+			</div>
+			<div class="popup popup_type_delete_card popup_is-animated">
+				<div class="popup__content">
+					<button type="button" class="popup__close"></button>
+					<h3 class="popup__title">Вы уверены?</h3>
+					<form class="popup__form" name="deleteCard" novalidate>
+						<button type="submit" class="button popup__button">Да</button>
 					</form>
 				</div>
 			</div>
