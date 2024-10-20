@@ -1,27 +1,36 @@
 import { isValid, toggleButtonState } from './validation.js'
 
-export const enableValidation = () => {
-	const formList = document.querySelectorAll('.popup__form')
-	formList.forEach(setEventListeners)
+export const enableValidation = config => {
+	const formList = document.querySelectorAll(config.formSelector)
+	formList.forEach(formElement => setEventListeners(formElement, config))
 }
 
-const setEventListeners = formElement => {
-	const inputList = formElement.querySelectorAll('.popup__input')
-	const buttonElement = formElement.querySelector('.popup__button')
+// Вынесли функцию setEventListeners за пределы enableValidation
+const setEventListeners = (formElement, config) => {
+	const inputList = [...formElement.querySelectorAll(config.inputSelector)]
+	const buttonElement = formElement.querySelector(config.submitButtonSelector)
 
 	const handleInputChange = (
 		formElement,
 		inputElement,
 		inputList,
-		buttonElement
+		buttonElement,
+		config
 	) => {
-		isValid(formElement, inputElement)
-		toggleButtonState(inputList, buttonElement)
+		isValid(formElement, inputElement, config)
+		toggleButtonState(inputList, buttonElement, config)
 	}
 
 	formElement.addEventListener('input', event => {
-		const inputElement = event.target.closest('.popup__input')
-		if (inputElement)
-			handleInputChange(formElement, inputElement, inputList, buttonElement)
+		const inputElement = event.target.closest(config.inputSelector)
+		if (inputElement) {
+			handleInputChange(
+				formElement,
+				inputElement,
+				inputList,
+				buttonElement,
+				config
+			)
+		}
 	})
 }

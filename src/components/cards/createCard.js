@@ -1,14 +1,13 @@
-import { deleteCardHandler } from '../handlers/deleteCardHandler'
-import {
+export const createCard = (
+	{ name, link, likes, owner, _id },
+	popups,
+	profileId,
+	showBigImageHandler,
+	setDeleteCardState,
 	handleLikeButtonClick,
-	updateLikeState,
-} from '../handlers/likeCardHandler'
-import { showImage } from '../popup/imagePopup'
-
-// Импорт шаблона для карточек
-const template = document.querySelector('#card-template').content
-
-export const createCard = ({ name, link, likes, owner, _id }, profileId) => {
+	updateLikeState
+) => {
+	const template = document.querySelector('#card-template').content
 	// Создание новой карточки
 	const card = template.querySelector('.card').cloneNode(true)
 
@@ -48,10 +47,10 @@ export const createCard = ({ name, link, likes, owner, _id }, profileId) => {
 				)
 			}
 			if (target === deleteButton) {
-				deleteCardHandler(card, _id)
+				setDeleteCardState(card, _id, popups.confirmDeletion)
 			}
 			if (target === cardImage) {
-				showImage(name, link)
+				showBigImageHandler(name, link, popups.showBigImage)
 			}
 		} catch (error) {
 			console.error('Ошибка при обработке клика по карточке:', error)

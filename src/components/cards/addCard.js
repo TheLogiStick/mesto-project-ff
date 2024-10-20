@@ -1,11 +1,21 @@
-import { showImage } from '../popup/imagePopup'
+import { setDeleteCardState } from '../handlers/deleteCardHandler'
+import {
+	handleLikeButtonClick,
+	updateLikeState,
+} from '../handlers/likeCardHandler'
+import { showBigImageHandler } from '../handlers/showBigImageHandler'
 import { createCard } from './createCard'
 
-// Импорт списка карточек
-const list = document.querySelector('.places__list')
-
 // Добавляем карточку на страницу
-export const addCard = (formCard, profileId, isFirstInit) => {
-	const card = createCard(formCard, profileId, showImage)
+export const addCard = (formCard, list, popups, profileId, isFirstInit) => {
+	const card = createCard(
+		formCard,
+		popups,
+		profileId,
+		showBigImageHandler,
+		setDeleteCardState,
+		handleLikeButtonClick,
+		updateLikeState
+	)
 	isFirstInit ? list.append(card) : list.prepend(card)
 }

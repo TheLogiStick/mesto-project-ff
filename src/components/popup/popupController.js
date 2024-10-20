@@ -1,11 +1,9 @@
-// Получение списка всех попапов на странице
-const popupList = [...document.querySelectorAll('.popup')]
-
 // Сохранение всех открытых попапов
 const openedPopups = new Set()
 
 export const openPopup = popup => {
 	popup.classList.add('popup_is-opened')
+
 	// Добавление попапа в openedPopups
 	openedPopups.add(popup)
 	document.addEventListener('keydown', handleEscClose)
@@ -41,7 +39,7 @@ const handlePopupClick = event => {
 	}
 }
 
-export const setPopupListeners = () => {
+export const setPopupListeners = popupList => {
 	popupList.forEach(item => {
 		item.addEventListener('click', handlePopupClick)
 	})

@@ -1,15 +1,11 @@
 import { updateProfile } from '../../api/api'
+import { closePopup } from '../popup/popupController'
+import { setLoadingState } from '../popup/setLoadingState'
 import { editProfile } from '../profile/profileEdit'
 
-export const handleProfileEdit = async (
-	event,
-	formProfile,
-	setLoadingState,
-	closePopup
-) => {
-	event.preventDefault()
-
+export const handleProfileEdit = async (formProfile, profile) => {
 	const submitButton = formProfile.querySelector('.popup__button')
+	submitButton.disabled = true
 	setLoadingState(submitButton, true)
 
 	const name = formProfile.name.value
@@ -17,11 +13,12 @@ export const handleProfileEdit = async (
 
 	try {
 		const data = await updateProfile(name, about)
-		editProfile(data)
+		editProfile(data, profile)
+
+		closePopup()
 	} catch (error) {
 		console.error('Ошибка при обновлении профиля:', error)
 	} finally {
 		setLoadingState(submitButton, false)
-		closePopup()
 	}
 }

@@ -13,10 +13,8 @@ export const setLoadingState = (
 
 	if (isLoading) {
 		button.textContent = loadingText
-		button.disabled = true
 	} else {
 		// Восстановление исходного текста
 		button.textContent = originalTexts.get(button)
-		button.disabled = false
 	}
 }

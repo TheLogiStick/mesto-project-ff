@@ -1,13 +1,10 @@
-const profileTitle = document.querySelector('.profile__title')
-const profileDesc = document.querySelector('.profile__description')
-const profileImage = document.querySelector('.profile__image')
+export const editProfile = (data = {}, profile) => {
+	const name = data.name || profile.title.textContent
+	const about = data.about || profile.description.textContent
+	const avatar =
+		data.avatar || 'https://i.ytimg.com/vi/58Qh1XcZaDA/hqdefault.jpg'
 
-export const editProfile = ({
-	name = profileTitle.textContent,
-	about = profileDesc.textContent,
-	avatar = profileImage.style.backgroundImage,
-}) => {
-	profileImage.style.backgroundImage = `url('${avatar}')`
-	profileTitle.textContent = name
-	profileDesc.textContent = about
+	profile.image.style.backgroundImage = `url('${avatar}')`
+	profile.title.textContent = name
+	profile.description.textContent = about
 }
